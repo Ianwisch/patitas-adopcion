@@ -17,6 +17,6 @@ export default defineConfig({
   webServer: {
     command: 'node server.mjs',
     url,
-    env: { PORT: port, PATITAS_REQUESTS_FILE: 'test-solicitudes.jsonl' }
+    env: { PORT: port, PATITAS_MODE: 'local', PATITAS_REQUESTS_FILE: 'test-solicitudes.jsonl' }
   }
 });

@@ -132,7 +132,9 @@ form.addEventListener('submit', async event => {
       fields.find(field => field.hasAttribute('aria-invalid'))?.focus();
       return;
     }
-    formStatus.textContent = '¡Listo! Guardamos tu solicitud para ' + selected.name + '.';
+    formStatus.textContent = result.simulated
+      ? '¡Listo! Simulaste una solicitud para ' + selected.name + '. Tus datos no se guardaron.'
+      : '¡Listo! Guardamos tu solicitud para ' + selected.name + '.';
     form.reset();
     submit.hidden = true;
     formStatus.tabIndex = -1;

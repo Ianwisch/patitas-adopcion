@@ -3,3 +3,6 @@
 /test-results/
 /playwright-report/
 /test-solicitudes.jsonl
+/.env
+/.env.*
+!/.env.example
