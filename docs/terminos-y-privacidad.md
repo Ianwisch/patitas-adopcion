@@ -1,14 +1,14 @@
-﻿# Términos de uso y privacidad de Patitas
+# Términos de uso y privacidad de Patitas
 
 ## Alcance de la demo
 
-Patitas es un proyecto de portfolio para ejecutar en local. Las fichas de mascotas son ficticias y el formulario sirve para probar el flujo de adopción. Enviar una solicitud registra una prueba en el equipo donde corre el servidor. El formulario no envía correos ni gestiona adopciones reales.
+Patitas es un proyecto de portfolio para ejecutar en local. Las fichas de mascotas son ficticias y el formulario sirve para probar el flujo de adopción. En el modo demo predeterminado, el formulario simula una solicitud y descarta los datos. Si quien ejecuta el servidor activa el modo local con persistencia, el envío registra una prueba en ese equipo. El formulario no envía correos ni gestiona adopciones reales.
 
 Usá nombres y correos ficticios, por ejemplo `Persona de prueba` y `prueba@example.test`. No ingreses datos de terceros ni publiques el archivo de solicitudes.
 
 ## Datos y almacenamiento
 
-El servidor registra el nombre y el correo ingresados, el identificador de la mascota, un identificador de solicitud y la fecha y hora. Usa estos datos para probar la validación y el guardado local. Los registros se agregan a `solicitudes.jsonl` y se conservan hasta que quien opera la instancia los elimine manualmente.
+En el modo local con persistencia, el servidor registra el nombre y el correo ingresados, el identificador de la mascota, un identificador de solicitud y la fecha y hora. Usa estos datos para probar la validación y el guardado local. Los registros se agregan a `solicitudes.jsonl` y se conservan hasta que quien opera la instancia los elimine manualmente.
 
 El navegador solicita imágenes a Unsplash y tipografías a Google Fonts. Esas conexiones están sujetas a las políticas de cada proveedor. El formulario envía sus datos al servidor de Patitas.
 

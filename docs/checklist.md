@@ -19,13 +19,15 @@ Para marcar una tarea, editá este archivo con el lápiz de GitHub, cambiá `- [
 
 ## Fase 3 · Seguridad del código y del repositorio
 
-- [ ] Implementar un modo demo en el backend que simule el flujo con datos ficticios sin guardar solicitudes ni enviarlas a servicios externos. Probar que el modo demo nunca persista los datos ingresados.
-- [ ] Exigir `application/json` en `POST /api/solicitudes`, medir el límite del cuerpo en bytes y fijar tiempos máximos de lectura. Probar respuestas `400`, `413` y `415`.
-- [ ] Si el endpoint de envíos queda disponible públicamente, limitar el volumen de solicitudes, controlar duplicados y automatizaciones, y probar la respuesta `429`.
-- [ ] Aplicar una política CSP que limite scripts, imágenes y fuentes a los orígenes necesarios. Añadir `X-Content-Type-Options: nosniff` y `frame-ancestors 'none'`.
-- [ ] Conservar la validación en servidor, el renderizado como texto y la lista explícita de archivos públicos. Verificar que la API nunca exponga el archivo de solicitudes ni detalles internos de errores.
-- [ ] Configurar CodeQL para JavaScript y revisar Secret scanning y Push protection en GitHub. Habilitar Dependabot para npm si se agregan dependencias.
-- [ ] Mantener Node.js en una versión LTS con soporte y aplicar actualizaciones de seguridad. Usar el gestor de secretos del hosting para credenciales y excluir del repositorio archivos locales con datos o secretos.
+- [x] Implementar un modo demo en el backend que simule el flujo con datos ficticios sin guardar solicitudes ni enviarlas a servicios externos. Probar que el modo demo nunca persista los datos ingresados.
+- [x] Exigir `application/json` en `POST /api/solicitudes`, medir el límite del cuerpo en bytes y fijar tiempos máximos de lectura. Probar respuestas `400`, `413` y `415`.
+- [x] Si el endpoint de envíos queda disponible públicamente, limitar el volumen de solicitudes, controlar duplicados y automatizaciones, y probar la respuesta `429`.
+- [x] Aplicar una política CSP que limite scripts, imágenes y fuentes a los orígenes necesarios. Añadir `X-Content-Type-Options: nosniff` y `frame-ancestors 'none'`.
+- [x] Conservar la validación en servidor, el renderizado como texto y la lista explícita de archivos públicos. Verificar que la API nunca exponga el archivo de solicitudes ni detalles internos de errores.
+- [x] Configurar CodeQL para JavaScript y Dependabot para npm.
+- [x] Verificar que Secret Protection y Push protection estén activas en GitHub.
+- [x] Documentar el uso de Node.js LTS con el último parche y excluir del repositorio archivos locales con datos o secretos.
+- [ ] Configurar el gestor de secretos del hosting si el despliegue requiere credenciales.
 
 ## Fase 4 · Publicación y operación de la demo
 
