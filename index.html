@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es-AR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patitas · Adopción de mascotas</title>
+<link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header class="shell"><a class="brand" href="/">🐾 Patitas<span>.</span></a><a class="nav" href="#mascotas">Ver mascotas</a></header>
+<main class="shell">
+  <section class="hero">
+    <div class="intro"><p class="label">ADOPCIÓN RESPONSABLE</p><h1>Un hogar para<br>cada patita<span>.</span></h1><p>Conocé a los animales que buscan familia. Tu próximo compañero te está esperando.</p><a class="button" href="#mascotas">Conocé a las mascotas</a></div>
+    <img class="hero-photo" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Dos perros corriendo juntos al aire libre">
+  </section>
+  <section id="mascotas" class="catalog" aria-labelledby="catalog-title">
+    <div class="section-head"><h2 id="catalog-title">Buscan hogar</h2><div class="filters" role="group" aria-label="Filtrar por especie">
+      <button type="button" data-filter="Todas" aria-pressed="true">Todas</button>
+      <button type="button" data-filter="Perros" aria-pressed="false">Perros</button>
+      <button type="button" data-filter="Gatos" aria-pressed="false">Gatos</button>
+      <button type="button" data-filter="Conejos" aria-pressed="false">Conejos</button>
+    </div></div>
+    <p id="catalog-status" role="status">Cargando mascotas…</p><div id="cards" class="cards"></div>
+  </section>
+</main>
+<footer class="shell"><strong>Patitas.</strong><small>Demo local de adopción</small></footer>
+<dialog aria-labelledby="form-title"><form id="adopt">
+  <button class="close" type="button" aria-label="Cerrar">×</button>
+  <h2 id="form-title"></h2>
+  <label>Tu nombre<input name="name" maxlength="100" autocomplete="name" required></label>
+  <label>Tu correo<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+  <button class="button" type="submit">Enviar solicitud</button>
+  <p id="form-status" role="status"></p>
+</form></dialog>
+</body></html>
+

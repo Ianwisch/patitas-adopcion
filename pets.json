@@ -1,0 +1,29 @@
+[
+  {
+    "id": "milo",
+    "name": "Milo",
+    "type": "Perros",
+    "age": "2 años",
+    "description": "Juguetón y fan de los paseos largos.",
+    "photo": "photo-1552053831-71594a27632d",
+    "alt": "Perro golden retriever"
+  },
+  {
+    "id": "olivia",
+    "name": "Olivia",
+    "type": "Gatos",
+    "age": "1 año",
+    "description": "Curiosa, mimosa y experta en siestas al sol.",
+    "photo": "photo-1573865526739-10659fec78a5",
+    "alt": "Gato naranja"
+  },
+  {
+    "id": "nube",
+    "name": "Nube",
+    "type": "Conejos",
+    "age": "8 meses",
+    "description": "Tranquila y siempre lista para una hojita verde.",
+    "photo": "photo-1585110396000-c9ffd4e4b308",
+    "alt": "Conejo"
+  }
+]
