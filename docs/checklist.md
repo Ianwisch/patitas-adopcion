@@ -10,12 +10,12 @@ Para marcar una tarea, editá este archivo con el lápiz de GitHub, cambiá `- [
 
 ## Fase 2 · Experiencia, calidad y contenido
 
-- [ ] Revisar diseño adaptable en móvil y escritorio, contraste, teclado, foco y lector de pantalla.
-- [ ] Mostrar estados de carga, catálogo vacío, errores por campo y confirmación accesible. Conservar lo ingresado si falla el envío y evitar dobles clics.
-- [ ] Optimizar y dimensionar imágenes, agregar texto alternativo y prever una imagen alternativa cuando falle el proveedor.
-- [ ] Agregar título, descripción, favicon y metadatos para compartir el enlace. Configurar indexación según el alcance de la demo.
-- [ ] Automatizar pruebas de los filtros, casos válidos e inválidos de la API y flujo completo del formulario. Ejecutarlas en GitHub Actions antes de integrar cambios.
-- [ ] Documentar en el README la configuración por entorno, los comandos de prueba y cómo reproducir el despliegue.
+- [x] Revisar diseño adaptable en móvil y escritorio, contraste, teclado, foco y semántica expuesta a tecnologías de asistencia.
+- [x] Mostrar estados de carga, catálogo vacío, errores por campo y confirmación accesible. Conservar lo ingresado si falla el envío y evitar dobles clics.
+- [x] Optimizar y dimensionar imágenes, agregar texto alternativo y prever una imagen alternativa cuando falle el proveedor.
+- [x] Agregar título, descripción, favicon y metadatos para compartir el enlace. Configurar indexación según el alcance de la demo.
+- [x] Automatizar pruebas de los filtros, casos válidos e inválidos de la API y flujo completo del formulario. Ejecutarlas en GitHub Actions antes de integrar cambios.
+- [x] Documentar en el README la configuración por entorno, los comandos de prueba y cómo reproducir el despliegue.
 
 ## Fase 3 · Seguridad del código y del repositorio
 
