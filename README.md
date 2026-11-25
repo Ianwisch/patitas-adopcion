@@ -1,32 +1,37 @@
-# Patitas
+﻿# Patitas
 
-Patitas is a responsive pet adoption demo with a catalog you can filter by species and a request form backed by a Node.js API. The interface is in Spanish (Argentina), and the pet profiles are sample data.
+Demo de adopción de mascotas con un catálogo filtrable y un formulario de solicitud conectado a una API en Node.js. La interfaz está en español de Argentina y las fichas son de ejemplo.
 
-## Features
+## Qué podés probar
 
-- Browse dogs, cats, and rabbits and filter the catalog by species.
-- Open an adoption request form for a specific pet.
-- Validate contact information on the server and save accepted requests locally.
+- Explorar perros, gatos y conejos y filtrar el catálogo por especie.
+- Abrir el formulario de una mascota y enviar una solicitud de prueba.
+- Ver cómo el servidor valida y guarda los envíos aceptados.
 
-## Run locally
+## Ejecutar en local
 
-Requires Node.js 22 or newer. There are no packages to install.
+Requiere Node.js 22 o superior. No hace falta instalar paquetes.
 
-```sh
+```bash
 node server.mjs
 ```
 
-Open [http://127.0.0.1:3000](http://127.0.0.1:3000). Set the `PORT` environment variable if you need a different port. The server listens on loopback. Photos and fonts are loaded from Unsplash and Google Fonts.
+Abrí [http://127.0.0.1:3000](http://127.0.0.1:3000). Si el puerto está ocupado, configurá la variable de entorno `PORT`. El servidor escucha en la interfaz local. Las fotos y tipografías se cargan desde Unsplash y Google Fonts.
 
 ## API
 
-| Method | Route | Behavior |
+| Método | Ruta | Comportamiento |
 | --- | --- | --- |
-| GET | `/api/mascotas` | Returns the sample pet catalog from `pets.json`. |
-| POST | `/api/solicitudes` | Accepts JSON with `petId`, `name`, and `email`. Returns HTTP 201 and a request ID on success. |
+| GET | `/api/mascotas` | Devuelve el catálogo de ejemplo desde `pets.json`. |
+| POST | `/api/solicitudes` | Recibe JSON con `petId`, `name` y `email`. Si los datos son válidos, devuelve HTTP 201 y el identificador de la solicitud. |
 
-Accepted requests are appended to `solicitudes.jsonl`, which is excluded from Git. This repository contains the source for a locally run demo.
+Las solicitudes se guardan en `solicitudes.jsonl`, que está excluido de Git. Usá datos ficticios para probar el formulario.
 
-## Stack
+## Tecnologías
 
-HTML, CSS, vanilla JavaScript, and Node.js using its built-in HTTP and file system modules.
+HTML, CSS, JavaScript y Node.js con sus módulos integrados de HTTP y sistema de archivos.
+
+## Documentación
+
+- [Términos de uso y privacidad](docs/terminos-y-privacidad.md)
+- [Checklist de mejoras](docs/checklist.md)
