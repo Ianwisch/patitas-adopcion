@@ -1,1 +1,5 @@
 /solicitudes.jsonl
+/node_modules/
+/test-results/
+/playwright-report/
+/test-solicitudes.jsonl

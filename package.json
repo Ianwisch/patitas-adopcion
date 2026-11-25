@@ -1,0 +1,24 @@
+{
+  "name": "patitas",
+  "version": "1.0.0",
+  "description": "Demo de adopción de mascotas con un catálogo filtrable y un formulario de solicitud conectado a una API en Node.js. La interfaz está en español de Argentina y las fichas son de ejemplo.",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ianwisch/patitas-adopcion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ianwisch/patitas-adopcion/issues"
+  },
+  "homepage": "https://github.com/Ianwisch/patitas-adopcion#readme",
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

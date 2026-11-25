@@ -1,5 +1,6 @@
 const cards = document.querySelector('#cards');
 const catalogStatus = document.querySelector('#catalog-status');
+const retry = document.querySelector('#retry');
 const filters = [...document.querySelectorAll('[data-filter]')];
 const dialog = document.querySelector('dialog');
 const form = document.querySelector('#adopt');
@@ -8,6 +9,29 @@ const submit = form.querySelector('[type=submit]');
 let pets = [];
 let selected;
 let pending = false;
+const fields = [form.elements.name, form.elements.email];
+
+function setFieldError(field, message = '') {
+  document.querySelector('#' + field.name + '-error').textContent = message;
+  if (message) field.setAttribute('aria-invalid', 'true');
+  else field.removeAttribute('aria-invalid');
+}
+
+for (const field of fields) {
+  field.addEventListener('input', () => setFieldError(field));
+}
+
+function useFallback(image) {
+  image.addEventListener('error', () => {
+    image.removeAttribute('srcset');
+    image.src = '/patitas.svg';
+  }, { once: true });
+  if (image.complete && image.getAttribute('src') && !image.naturalWidth) {
+    image.dispatchEvent(new Event('error'));
+  }
+}
+
+useFallback(document.querySelector('.hero-photo'));
 
 function render(filter) {
   const shown = pets.filter(pet => filter === 'Todas' || pet.type === filter);
@@ -15,7 +39,13 @@ function render(filter) {
     const card = document.createElement('article');
     card.className = 'card';
     const img = document.createElement('img');
-    img.src = 'https://images.unsplash.com/' + pet.photo + '?auto=format&fit=crop&w=720&q=82';
+    const photo = 'https://images.unsplash.com/' + pet.photo + '?auto=format&fit=crop&q=80&w=';
+    useFallback(img);
+    img.width = 720;
+    img.height = 436;
+    img.sizes = '(max-width:620px) 100vw, 33vw';
+    img.srcset = photo + '360 360w, ' + photo + '720 720w';
+    img.src = photo + '720';
     img.alt = pet.alt;
     img.loading = 'lazy';
 
@@ -35,6 +65,7 @@ function render(filter) {
     button.addEventListener('click', () => {
       selected = pet;
       form.reset();
+      for (const field of fields) setFieldError(field);
       submit.hidden = false;
       formStatus.textContent = '';
       document.querySelector('#form-title').textContent = 'Conocé a ' + pet.name;
@@ -45,8 +76,7 @@ function render(filter) {
     card.append(img, info);
     return card;
   }));
-  catalogStatus.textContent = shown.length ? '' : 'No hay mascotas en esta categoría.';
-  catalogStatus.hidden = shown.length > 0;
+  catalogStatus.textContent = shown.length ? 'Mascotas disponibles: ' + shown.length : 'No hay mascotas en esta categoría.';
 }
 
 for (const button of filters) {
@@ -58,6 +88,8 @@ for (const button of filters) {
 }
 
 async function loadPets() {
+  catalogStatus.textContent = 'Cargando mascotas…';
+  retry.hidden = true;
   try {
     const response = await fetch('/api/mascotas');
     if (!response.ok) throw new Error();
@@ -65,7 +97,8 @@ async function loadPets() {
     render('Todas');
     for (const button of filters) button.disabled = false;
   } catch {
-    catalogStatus.textContent = 'No pudimos cargar las mascotas. Recargá la página para volver a intentar.';
+    catalogStatus.textContent = 'No pudimos cargar las mascotas.';
+    retry.hidden = false;
   }
 }
 
@@ -73,6 +106,16 @@ form.querySelector('.close').addEventListener('click', () => { if (!pending) dia
 dialog.addEventListener('cancel', event => { if (pending) event.preventDefault(); });
 form.addEventListener('submit', async event => {
   event.preventDefault();
+  if (pending || submit.hidden || !selected) return;
+  formStatus.textContent = '';
+  const [name, email] = fields;
+  setFieldError(name, name.value.trim() ? '' : 'Ingresá tu nombre.');
+  setFieldError(email, email.validity.valid && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value) ? '' : 'Ingresá un correo válido.');
+  const invalid = fields.find(field => field.hasAttribute('aria-invalid'));
+  if (invalid) {
+    invalid.focus();
+    return;
+  }
   pending = true;
   submit.disabled = true;
   formStatus.textContent = 'Enviando…';
@@ -84,12 +127,16 @@ form.addEventListener('submit', async event => {
     });
     const result = await response.json();
     if (!response.ok) {
+      for (const field of fields) setFieldError(field, result.errors?.[field.name]);
       formStatus.textContent = result.error;
+      fields.find(field => field.hasAttribute('aria-invalid'))?.focus();
       return;
     }
     formStatus.textContent = '¡Listo! Guardamos tu solicitud para ' + selected.name + '.';
     form.reset();
     submit.hidden = true;
+    formStatus.tabIndex = -1;
+    formStatus.focus();
   } catch {
     formStatus.textContent = 'No pudimos enviar la solicitud. Probá de nuevo.';
   } finally {
@@ -98,5 +145,5 @@ form.addEventListener('submit', async event => {
   }
 });
 
+retry.addEventListener('click', loadPets);
 loadPets();
-
