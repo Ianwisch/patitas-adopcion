@@ -8,72 +8,49 @@ import { join } from 'node:path';
 const savedRequests = new URL('../test-solicitudes.jsonl', import.meta.url);
 test.afterAll(() => rm(savedRequests, { force: true }));
 
-test('filtra el catálogo y permite reintentar después de un error', async ({ page }) => {
-  await page.route('**/api/mascotas', route => route.abort(), { times: 1 });
+test('filtra el catálogo por especie y categoría', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('status')).toHaveText('No pudimos cargar las mascotas.');
-  await page.getByRole('button', { name: 'Volver a intentar' }).click();
-  await expect(page.getByRole('article')).toHaveCount(3);
-  await page.getByRole('button', { name: 'Gatos' }).click();
-  await expect(page.getByRole('article')).toHaveCount(1);
-  await expect(page.getByRole('heading', { name: 'Olivia' })).toBeVisible();
+  await expect(page.getByRole('article')).toHaveCount(4);
+  await page.getByRole('link', { name: 'Gatos' }).click();
+  await expect(page.getByRole('article')).toHaveCount(2);
+  await page.getByRole('button', { name: 'Descanso' }).click();
+  await expect(page.getByRole('heading', { name: 'Cucha redonda Nube' })).toBeVisible();
+  await page.getByRole('button', { name: 'Alimento' }).click();
+  await expect(page.getByText('No encontramos productos con esos filtros.')).toBeVisible();
+  await page.getByRole('link', { name: 'Tienda' }).click();
+  await expect(page.getByRole('article')).toHaveCount(4);
 });
 
-test('valida la solicitud, conserva los datos ante un error y confirma el envío', async ({ page }) => {
+test('el carrito conserva cantidades, calcula el subtotal y simula un pedido', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Me interesa Olivia' }).click();
-  const dialog = page.getByRole('dialog');
-  const name = dialog.getByLabel('Tu nombre');
-  const email = dialog.getByLabel('Tu correo');
-  const submit = dialog.getByRole('button', { name: 'Enviar solicitud' });
-  await expect(name).toBeFocused();
-  await submit.click();
-  await expect(name).toHaveAttribute('aria-invalid', 'true');
-  await expect(dialog.getByText('Ingresá tu nombre.')).toBeVisible();
-  await name.fill('Persona de prueba');
-  await email.fill('prueba@example.test');
-  await page.route('**/api/solicitudes', route => route.abort(), { times: 1 });
-  await submit.click();
-  await expect(dialog.getByRole('status')).toContainText('No pudimos enviar');
-  await expect(name).toHaveValue('Persona de prueba');
-  await expect(email).toHaveValue('prueba@example.test');
-  await submit.click();
-  await expect(dialog.getByRole('status')).toContainText('Guardamos tu solicitud para Olivia');
-  await expect(dialog.getByRole('status')).toBeFocused();
-  const entries = (await readFile(savedRequests, 'utf8')).trim().split('\n').map(JSON.parse);
-  expect(entries).toEqual(expect.arrayContaining([expect.objectContaining({ petId: 'olivia', email: 'prueba@example.test' })]));
+  const add = page.getByRole('button', { name: 'Agregar Pelota con cuerda al carrito' });
+  await add.click();
+  await add.click();
+  await page.reload();
+  await page.getByRole('button', { name: 'Abrir carrito, 2 productos' }).click();
+  const cart = page.getByRole('dialog', { name: 'Tu carrito' });
+  await expect(cart.locator('#cart-total')).toContainText('15.800');
+  await cart.getByRole('button', { name: 'Quitar una unidad de Pelota con cuerda' }).click();
+  await expect(cart.locator('#cart-total')).toContainText('7.900');
+  await cart.getByRole('button', { name: 'Simular pedido' }).click();
+  await expect(cart.getByRole('status')).toContainText('Pedido simulado');
+  await expect(cart.getByText('Tu carrito está vacío.')).toBeVisible();
 });
 
-test('la API rechaza datos inválidos y devuelve errores por campo', async ({ request }) => {
-  const response = await request.post('/api/solicitudes', { data: { petId: 'olivia', name: '', email: 'mal' } });
-  expect(response.status()).toBe(400);
-  expect(await response.json()).toMatchObject({ errors: { name: expect.any(String), email: expect.any(String) } });
-});
-
-test('el catálogo móvil conserva sus imágenes cuando falla el proveedor', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.route('https://images.unsplash.com/**', route => route.abort());
+test('la tienda cabe en pantalla móvil y responde al teclado', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/');
-  const hero = page.getByRole('img', { name: 'Dos perros corriendo juntos al aire libre' });
-  await expect(hero).toHaveAttribute('src', '/patitas.svg');
-  const photo = page.getByRole('img', { name: 'Gato naranja' });
-  await photo.scrollIntoViewIfNeeded();
-  await expect(photo).toHaveAttribute('src', '/patitas.svg');
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
-});
-
-test('permite saltar al contenido y abrir el formulario con el teclado', async ({ page }) => {
-  await page.goto('/');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(360);
   await page.keyboard.press('Tab');
   const skip = page.getByRole('link', { name: 'Saltar al contenido' });
   await expect(skip).toBeFocused();
   await skip.press('Enter');
   await expect(page.getByRole('main')).toBeFocused();
-  const adopt = page.getByRole('button', { name: 'Me interesa Milo' });
-  await adopt.press('Enter');
-  await expect(page.getByLabel('Tu nombre')).toBeFocused();
+  const trigger = page.getByRole('button', { name: 'Abrir carrito, 0 productos' });
+  await trigger.press('Enter');
+  await expect(page.getByRole('button', { name: 'Cerrar carrito' })).toBeFocused();
   await page.keyboard.press('Escape');
-  await expect(adopt).toBeFocused();
+  await expect(trigger).toBeFocused();
 });
 
 test('la API limita el cuerpo, exige JSON y mantiene los archivos internos privados', async ({ request }) => {
