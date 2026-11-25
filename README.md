@@ -1,12 +1,14 @@
 # Patitas
 
-Demo de adopción de mascotas con un catálogo filtrable y un formulario de solicitud conectado a una API en Node.js. La interfaz está en español de Argentina y las fichas son de ejemplo.
+Patitas es una tienda demo de productos para perros y gatos. El catálogo presenta productos ilustrativos con precios de ejemplo en pesos argentinos.
 
 ## Qué podés probar
 
-- Explorar perros, gatos y conejos y filtrar el catálogo por especie.
-- Abrir el formulario de una mascota y enviar una solicitud de prueba.
-- Ver cómo el servidor valida y guarda los envíos aceptados.
+- Explorar el catálogo y filtrar por categoría o especie.
+- Agregar productos al carrito, ajustar cantidades y consultar el subtotal.
+- Simular un pedido. El carrito guarda únicamente identificadores y cantidades en el navegador. La simulación no envía pedidos ni solicita datos personales.
+
+Las imágenes de la tienda se generaron con ImageGen y se sirven desde el proyecto.
 
 ## Ejecutar en local
 
@@ -16,7 +18,7 @@ Requiere una versión LTS de Node.js con soporte (22 o superior). Usá el últim
 node server.mjs
 ```
 
-Abrí [http://127.0.0.1:3000](http://127.0.0.1:3000). Si el puerto está ocupado, configurá la variable de entorno `PORT`. El servidor escucha en la interfaz local. Las fotos y tipografías se cargan desde Unsplash y Google Fonts.
+Abrí [http://127.0.0.1:3000](http://127.0.0.1:3000). Si el puerto está ocupado, configurá la variable de entorno `PORT`. El servidor escucha en la interfaz local. Las imágenes del catálogo son locales. La tipografía utiliza Google Fonts.
 
 ## Configuración y despliegue local
 
@@ -28,7 +30,7 @@ El mismo comando arranca el backend y sirve el frontend. Para repetir el desplie
 | `PORT` | `3000` | Puerto HTTP local. |
 | `PATITAS_REQUESTS_FILE` | `solicitudes.jsonl` junto al servidor | Ruta alternativa para aislar registros entre entornos. Las pruebas usan un archivo temporal separado. |
 
-La demo solicita a los buscadores que no indexen la página. Las tarjetas tienen imágenes adaptables y una ilustración de respaldo. El formulario muestra errores por campo, conserva los datos si falla el envío y confirma el resultado.
+La demo solicita a los buscadores que no indexen la página. El catálogo y el carrito se adaptan a pantallas móviles y de escritorio.
 
 ## Pruebas
 
@@ -38,9 +40,11 @@ npx playwright install chromium
 npm test
 ```
 
-Playwright prueba filtros, reintento del catálogo, validación de API, envío del formulario y respaldo de imágenes en un viewport móvil. También verifica privacidad del modo demo, límites, duplicados y encabezados. GitHub Actions ejecuta la suite en cada push y pull request.
+Playwright prueba los filtros, el carrito, los subtotales, el flujo de pedido simulado, el diseño móvil y la navegación por teclado. También verifica las protecciones de la API de adopción. GitHub Actions ejecuta la suite en cada push y pull request.
 
-## API
+## API de adopción existente
+
+El backend conserva estas rutas para la demo original. El catálogo y el carrito de la tienda funcionan en el navegador.
 
 | Método | Ruta | Comportamiento |
 | --- | --- | --- |

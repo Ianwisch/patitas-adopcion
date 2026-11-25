@@ -13,7 +13,9 @@ const assets = new Map([
   ['/', ['index.html', 'text/html']],
   ['/style.css', ['style.css', 'text/css']],
   ['/app.js', ['app.js', 'text/javascript']],
-  ['/patitas.svg', ['patitas.svg', 'image/svg+xml']]
+  ['/patitas.svg', ['patitas.svg', 'image/svg+xml']],
+  ['/tienda-hero.jpg', ['tienda-hero.jpg', 'image/jpeg']],
+  ['/tienda-productos.jpg', ['tienda-productos.jpg', 'image/jpeg']]
 ]);
 const port = Number(process.env.PORT || 3000);
 const maxBodyBytes = 4096;
@@ -57,7 +59,7 @@ const server = createServer({
   connectionsCheckingInterval: 1000
 }, async (req, res) => {
   const send = (status, data, type = 'application/json', extraHeaders = {}) => {
-    res.writeHead(status, { ...securityHeaders, 'Content-Type': type + '; charset=utf-8', ...extraHeaders });
+    res.writeHead(status, { ...securityHeaders, 'Content-Type': type.startsWith('image/') ? type : type + '; charset=utf-8', ...extraHeaders });
     res.end(type === 'application/json' ? JSON.stringify(data) : data);
   };
   const rejectBody = (status, error, headers = {}) =>

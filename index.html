@@ -1,40 +1,74 @@
 <!doctype html>
 <html lang="es-AR">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Patitas · Adopción de mascotas</title>
-<meta name="description" content="Explorá un catálogo de ejemplo y probá el flujo de adopción de Patitas.">
-<meta name="robots" content="noindex">
-<meta property="og:title" content="Patitas · Adopción de mascotas">
-<meta property="og:description" content="Explorá el catálogo y probá el flujo de adopción de Patitas.">
-<meta property="og:type" content="website">
-<link rel="icon" href="/patitas.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Alimento, juguetes y accesorios para perros y gatos. Explorá la tienda demo de Patitas.">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="Patitas · Tienda para mascotas">
+  <meta property="og:description" content="Todo para perros y gatos, del paseo a la siesta.">
+  <meta property="og:type" content="website">
+  <title>Patitas · Tienda para mascotas</title>
+  <link rel="icon" href="/patitas.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
 <body>
-<a class="skip-link" href="#contenido">Saltar al contenido</a>
-<header class="shell"><a class="brand" href="/">🐾 Patitas<span>.</span></a><a class="nav" href="#mascotas">Ver mascotas</a></header>
-<main class="shell" id="contenido" tabindex="-1">
-  <section class="hero">
-    <div class="intro"><p class="label">ADOPCIÓN RESPONSABLE</p><h1>Un hogar para<br>cada patita<span>.</span></h1><p>Conocé a los animales que buscan familia. Tu próximo compañero te está esperando.</p><a class="button" href="#mascotas">Conocé a las mascotas</a></div>
-    <img class="hero-photo" width="1000" height="620" srcset="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=560&amp;q=80 560w, https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=1000&amp;q=85 1000w" sizes="(max-width:620px) 100vw, 50vw" src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Dos perros corriendo juntos al aire libre">
-  </section>
-  <section id="mascotas" class="catalog" aria-labelledby="catalog-title">
-    <div class="section-head"><h2 id="catalog-title">Buscan hogar</h2><div class="filters" role="group" aria-label="Filtrar por especie">
-      <button type="button" data-filter="Todas" aria-pressed="true">Todas</button>
-      <button type="button" data-filter="Perros" aria-pressed="false">Perros</button>
-      <button type="button" data-filter="Gatos" aria-pressed="false">Gatos</button>
-      <button type="button" data-filter="Conejos" aria-pressed="false">Conejos</button>
-    </div></div>
-    <p id="catalog-status" role="status">Cargando mascotas…</p><button type="button" id="retry" hidden>Volver a intentar</button><div id="cards" class="cards"></div>
-  </section>
-</main>
-<footer class="shell"><strong>Patitas.</strong><small>Demo local de adopción</small></footer>
-<dialog aria-labelledby="form-title"><form id="adopt" novalidate>
-  <button class="close" type="button" aria-label="Cerrar">×</button>
-  <h2 id="form-title"></h2>
-  <p>Usá datos ficticios para probar el formulario.</p>
-  <label for="name">Tu nombre</label><input id="name" name="name" maxlength="100" autocomplete="name" aria-describedby="name-error" required autofocus><p class="field-error" id="name-error"></p>
-  <label for="email">Tu correo</label><input id="email" name="email" type="email" maxlength="254" autocomplete="email" aria-describedby="email-error" required><p class="field-error" id="email-error"></p>
-  <button class="button" type="submit">Enviar solicitud</button>
-  <p id="form-status" role="status"></p>
-</form></dialog>
-</body></html>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="header">
+    <div class="shell header-inner">
+      <a class="brand" href="/" aria-label="Patitas, inicio"><img src="/patitas.svg" alt="" width="36" height="36"> Patitas<span>.</span></a>
+      <nav aria-label="Navegación principal">
+        <a href="#catalogo" data-category="Todos">Tienda</a>
+        <a href="#catalogo" data-species="Perros">Perros</a>
+        <a href="#catalogo" data-species="Gatos">Gatos</a>
+      </nav>
+      <button class="cart-trigger" type="button" aria-label="Abrir carrito, 0 productos" aria-haspopup="dialog">
+        <span>Carrito</span><span id="cart-count" aria-hidden="true">0</span>
+      </button>
+    </div>
+  </header>
+  <main id="contenido" tabindex="-1" class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">TIENDA PARA PERROS Y GATOS</p>
+        <h1 id="hero-title">Para sus días<br>más <em>felices.</em></h1>
+        <p>Alimento, juguetes y accesorios para acompañarlos en cada paseo, siesta y aventura.</p>
+        <a href="#catalogo" class="button" data-category="Todos">Explorar catálogo</a>
+      </div>
+      <div class="hero-photo" role="img" aria-label="Un perro golden retriever y un gato naranja sobre un fondo amarillo"></div>
+    </section>
+    <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
+      <div class="catalog-header">
+        <div><h2 id="catalog-title">Elegí sus favoritos</h2><p id="catalog-subtitle">Encontrá algo para cada momento del día.</p></div>
+        <div class="filters" role="group" aria-label="Categorías">
+          <button type="button" data-filter="Todos" aria-pressed="true">Todos</button>
+          <button type="button" data-filter="Alimento" aria-pressed="false">Alimento</button>
+          <button type="button" data-filter="Juguetes" aria-pressed="false">Juguetes</button>
+          <button type="button" data-filter="Descanso" aria-pressed="false">Descanso</button>
+          <button type="button" data-filter="Paseo" aria-pressed="false">Paseo</button>
+        </div>
+      </div>
+      <p class="sr-only" id="catalog-status" role="status"></p>
+      <div class="products" id="products"></div>
+      <noscript><p>Activá JavaScript para explorar el catálogo y usar el carrito.</p></noscript>
+    </section>
+  </main>
+  <footer class="shell footer">
+    <a class="brand" href="/">Patitas<span>.</span></a>
+    <p>Tienda demo · Productos y precios ilustrativos</p>
+  </footer>
+  <p class="sr-only" id="cart-announcement" role="status"></p>
+  <dialog id="cart" aria-labelledby="cart-title">
+    <div class="cart-heading"><h2 id="cart-title">Tu carrito</h2><button type="button" class="close" aria-label="Cerrar carrito" autofocus>×</button></div>
+    <p id="cart-empty">Tu carrito está vacío.</p>
+    <ul id="cart-items"></ul>
+    <div class="cart-summary" id="cart-summary" hidden>
+      <p class="cart-total"><span>Subtotal</span><strong id="cart-total"></strong></p>
+      <button type="button" class="button" id="order">Simular pedido</button>
+      <p class="demo-note">La simulación no realiza cobros ni toma datos personales.</p>
+    </div>
+    <p role="status" id="cart-status"></p>
+  </dialog>
+</body>
+</html>
